@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy — Tempo</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root { --ink:#14201a; --ink-2:#48584f; --paper:#fbfdfb; --green:#2fa968; --line:rgba(20,32,26,0.08); }
+@media (prefers-color-scheme: dark) {
+  :root { --ink:#eef5f0; --ink-2:#b7c4bc; --paper:#0d1410; --line:rgba(238,245,240,0.09); }
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:"Inter",-apple-system,sans-serif; background:var(--paper); color:var(--ink); line-height:1.7; }
+.wrap { max-width:720px; margin:0 auto; padding:48px 24px 80px; }
+a { color:var(--green); }
+h1 { font-size:34px; font-weight:800; letter-spacing:-0.03em; margin:24px 0 6px; }
+h2 { font-size:19px; font-weight:700; margin:34px 0 8px; }
+p, li { font-size:15.5px; color:var(--ink-2); }
+ul { padding-left:22px; margin-top:6px; }
+.back { font-size:14px; font-weight:600; text-decoration:none; }
+.updated { font-size:13.5px; color:var(--ink-2); margin-bottom:8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Tempo</a>
+  <h1>Privacy policy</h1>
+  <p class="updated">Last updated 2 July 2026</p>
+
+  <p>Tempo is built to keep your plans yours. This page describes everything the
+  app does with data — it's short because there isn't much to tell.</p>
+
+  <h2>Your data lives on your device</h2>
+  <p>Tasks, lists, habits, focus sessions and settings are stored locally on your
+  Mac or iPhone. Tempo has no analytics, no advertising SDKs, and does not track
+  you. We never sell data — we never even see it unless you turn on sync.</p>
+
+  <h2>If you create a sync account</h2>
+  <p>Cloud sync is optional. When you create an account, the following is stored
+  on the sync server so your devices (and, if you choose, your partner) can stay
+  in sync:</p>
+  <ul>
+    <li>Your email address and display name (to identify your account).</li>
+    <li>The content you sync: tasks, lists, habits, comments and related changes.</li>
+    <li>A securely hashed password — never the password itself.</li>
+  </ul>
+  <p>Partner sharing only ever shares items you explicitly mark as shared. You can
+  disconnect a partner, or delete your account and its server data, at any time
+  from Settings → Sync.</p>
+
+  <h2>Calendars</h2>
+  <p>Apple Calendar events are read on-device through Apple's EventKit and never
+  leave your device. Optional Google Calendar and Notion connections only read the
+  calendars you choose to display.</p>
+
+  <h2>Purchases</h2>
+  <p>Tempo Plus subscriptions are processed entirely by Apple. Tempo never sees
+  your payment details.</p>
+
+  <h2>Notifications</h2>
+  <p>Reminders and focus-session alerts are scheduled locally on your device.</p>
+
+  <h2>Deleting your data</h2>
+  <p>Settings → Data → Delete All Data erases everything stored by the app on
+  that device, including preferences. Deleting a sync account removes your data
+  from the server.</p>
+
+  <h2>Contact</h2>
+  <p>Questions? <a href="mailto:ethanmarch0@gmail.com">ethanmarch0@gmail.com</a></p>
+</div>
+</body>
+</html>
