@@ -660,6 +660,21 @@ td .muted { color: var(--ink-3); }
         value: num(s.plus_grants),
         sub: s.plus_free_for_all ? "Free for everyone is ON" : "manual grants",
         accent: !!s.plus_free_for_all
+      },
+      {
+        label: "Installs",
+        value: num(s.installs_total),
+        sub: num(s.installs_ios) + " iPhone · " + num(s.installs_mac) + " Mac · " + num(s.installs_active_7d) + " active 7d"
+      },
+      {
+        label: "App launches",
+        value: num(s.launches_total),
+        sub: "across all installs"
+      },
+      {
+        label: "Site downloads",
+        value: num(s.downloads_total),
+        sub: num(s.downloads_7d) + " in the last 7 days"
       }
     ];
     var html = cards.map(function (c) {
