@@ -95,7 +95,10 @@ a { color: inherit; }
 
 :focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 3px; }
 .band :focus-visible { outline-color: var(--band-grn); }
-::selection { background: rgba(47, 169, 104, 0.24); }
+::selection { background: rgba(47, 169, 104, 0.34); color: var(--ink); }
+::-moz-selection { background: rgba(47, 169, 104, 0.34); color: var(--ink); }
+.band ::selection, .plan.plus ::selection { background: rgba(94, 215, 151, 0.32); color: #EDF6EF; }
+.band ::-moz-selection, .plan.plus ::-moz-selection { background: rgba(94, 215, 151, 0.32); color: #EDF6EF; }
 
 .skip {
   position: absolute; left: -9999px; top: 0; z-index: 100;
@@ -140,6 +143,7 @@ h3.row-head {
   letter-spacing: -0.02em;
   font-weight: 600;
 }
+h1, h2, h3.row-head { text-wrap: balance; }
 .eyebrow {
   display: block;
   font-size: 12px;
@@ -158,11 +162,19 @@ h3.row-head {
   background: var(--btn-bg); color: var(--btn-ink);
   padding: 14px 28px; border-radius: 999px;
   font-size: 15.5px; font-weight: 600; text-decoration: none;
-  transition: background 0.18s ease, transform 0.18s ease;
+  box-shadow: 0 1px 2px rgba(7, 26, 16, 0.10);
+  transition: background 0.22s ease,
+              transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1),
+              box-shadow 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.btn:hover { background: var(--btn-hover); transform: translateY(-1px); }
-.btn:active { transform: translateY(0); }
-.btn svg { width: 17px; height: 17px; flex: none; }
+.btn:hover {
+  background: var(--btn-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(7, 26, 16, 0.10), 0 14px 28px -10px rgba(7, 26, 16, 0.35);
+}
+.btn:active { transform: translateY(0); transition-duration: 0.1s; box-shadow: 0 1px 2px rgba(7, 26, 16, 0.12); }
+.btn svg { width: 17px; height: 17px; flex: none; transition: transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.btn:hover svg { transform: translateY(2px); }
 .btn.sm { padding: 9px 19px; font-size: 14px; }
 .band .btn { background: var(--grn); color: #04281C; }
 .band .btn:hover { background: var(--band-grn); }
@@ -175,7 +187,8 @@ h3.row-head {
   transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
 .tlink:hover { color: var(--eyebrow); text-decoration-color: var(--eyebrow); }
-.tlink svg { width: 15px; height: 15px; }
+.tlink svg { width: 15px; height: 15px; transition: transform 0.24s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.tlink:hover svg { transform: translateY(2px); }
 
 /* ================= Nav ================= */
 .navbar {
@@ -184,9 +197,12 @@ h3.row-head {
   -webkit-backdrop-filter: blur(14px) saturate(1.5);
   backdrop-filter: blur(14px) saturate(1.5);
   border-bottom: 1px solid transparent;
-  transition: border-color 0.25s ease;
+  transition: border-color 0.3s ease, box-shadow 0.35s ease;
 }
-.navbar.scrolled { border-bottom-color: var(--line); }
+.navbar.scrolled {
+  border-bottom-color: var(--line);
+  box-shadow: 0 12px 32px -24px rgba(11, 61, 36, 0.35);
+}
 .navbar nav { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
 .brand img { width: 32px; height: 32px; border-radius: 8px; }
@@ -219,7 +235,8 @@ h3.row-head {
   .hero h1 { animation-delay: 0.1s; }
   .hero .lede { animation-delay: 0.2s; }
   .hero .hero-ctas { animation-delay: 0.3s; }
-  .hero .hero-trust { animation-delay: 0.34s; }
+  .hero .hero-new { animation-delay: 0.35s; }
+  .hero .hero-trust { animation-delay: 0.4s; }
   .hero-shot { animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.42s both; }
 }
 
@@ -364,6 +381,13 @@ section { padding: clamp(100px, 12vw, 160px) 0; }
 }
 .phone-frame img { width: 100%; border-radius: 31px; }
 .phone figcaption { margin-top: 18px; font-size: 14px; font-weight: 600; color: var(--ink-2); }
+@media (prefers-reduced-motion: no-preference) and (hover: hover) {
+  .phone-frame { transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  .phone:nth-child(odd) .phone-frame { transform: rotate(-1.1deg); }
+  .phone:nth-child(even) .phone-frame { transform: rotate(1.1deg); }
+  .phone:hover .phone-frame,
+  .phone:focus-within .phone-frame { transform: rotate(0deg) scale(1.015); }
+}
 
 /* ================= Pricing ================= */
 .plans {
@@ -377,7 +401,10 @@ section { padding: clamp(100px, 12vw, 160px) 0; }
   background: var(--card);
   padding: clamp(32px, 4vw, 46px);
   display: flex; flex-direction: column;
+  transition: transform 0.32s cubic-bezier(0.2, 0.7, 0.2, 1),
+              box-shadow 0.32s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
+.plan:hover { transform: translateY(-4px); box-shadow: 0 24px 48px -24px rgba(11, 61, 36, 0.3); }
 .plan-name { font-size: 15px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
 .price-num { font-size: clamp(40px, 5vw, 52px); letter-spacing: -0.02em; line-height: 1.1; margin-top: 14px; }
 .price-num .per { font-family: "Inter", sans-serif; font-size: 15px; font-weight: 500; letter-spacing: 0; color: var(--ink-3); }
@@ -459,6 +486,156 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 52px; }
 .foot .links a { font-size: 13.5px; color: var(--ink-3); text-decoration: none; }
 .foot .links a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
 
+/* ================= Screenshot buttons ================= */
+main [id] { scroll-margin-top: 84px; }
+html.modal-open { overflow: hidden; }
+
+.shot {
+  display: block; position: relative; width: 100%;
+  padding: 0; border: 0; background: none;
+  color: inherit; font: inherit; text-align: inherit;
+  border-radius: inherit;
+}
+.shot img { width: 100%; }
+.lbx .shot { cursor: zoom-in; }
+.lbx .shot { transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.lbx .hero-shot .shot:hover, .lbx .row-media .shot:hover, .lbx .grove-shot .shot:hover { transform: translateY(-3px); }
+.shot-hint {
+  position: absolute; left: 50%; bottom: 16px;
+  transform: translate(-50%, 4px);
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 13px; border-radius: 999px;
+  font-size: 12.5px; font-weight: 600; letter-spacing: 0.01em; white-space: nowrap;
+  background: rgba(12, 18, 14, 0.66); color: #EDF6EF;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.shot-hint svg { width: 13px; height: 13px; flex: none; }
+.lbx .shot:hover .shot-hint,
+.lbx .shot:focus-visible .shot-hint { opacity: 1; transform: translate(-50%, 0); }
+.phone-frame .shot-hint { bottom: 22px; }
+
+/* ================= Dialogs (lightbox + what's new) ================= */
+dialog.lb, dialog.wn {
+  position: fixed; inset: 0;
+  width: auto; height: auto; max-width: none; max-height: none;
+  margin: 0; border: 0; padding: 0;
+  background: transparent; overscroll-behavior: contain;
+}
+dialog.lb[open], dialog.wn[open] { display: grid; place-items: center; }
+dialog.lb::backdrop, dialog.wn::backdrop {
+  background: rgba(7, 16, 11, 0.6);
+  -webkit-backdrop-filter: blur(12px) saturate(1.1);
+  backdrop-filter: blur(12px) saturate(1.1);
+}
+
+.lb-fig { display: grid; gap: 16px; justify-items: center; padding: 24px; }
+.lb-img {
+  max-width: min(1180px, calc(100vw - 48px));
+  max-height: calc(100vh - 132px);
+  width: auto; height: auto;
+  border-radius: 16px;
+  filter: drop-shadow(0 34px 70px rgba(0, 0, 0, 0.5));
+  will-change: transform;
+}
+.lb-cap { font-size: 14px; font-weight: 600; color: #CFE0D4; text-align: center; }
+.lb-close {
+  position: absolute; top: 20px; right: 20px; z-index: 1;
+  width: 42px; height: 42px; border-radius: 999px;
+  border: 1px solid rgba(237, 246, 239, 0.24);
+  background: rgba(12, 18, 14, 0.55); color: #EDF6EF;
+  display: grid; place-items: center; cursor: pointer;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.lb-close:hover { background: rgba(12, 18, 14, 0.8); transform: scale(1.06); }
+.lb-close svg { width: 16px; height: 16px; }
+dialog.lb :focus-visible { outline-color: var(--band-grn); }
+
+.wn-panel {
+  position: relative;
+  width: min(470px, calc(100vw - 40px));
+  max-height: calc(100vh - 48px); overflow: auto;
+  background: var(--card); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 22px;
+  padding: 36px 36px 30px;
+  box-shadow: 0 40px 90px -30px rgba(7, 20, 12, 0.5);
+}
+.wn-panel .eyebrow { margin-bottom: 14px; }
+.wn-title {
+  font-family: "Fraunces", Georgia, serif;
+  font-optical-sizing: auto;
+  font-size: 29px; line-height: 1.1; letter-spacing: -0.02em; font-weight: 600;
+  text-wrap: balance;
+}
+.wn-list { list-style: none; margin-top: 22px; border-top: 1px solid var(--line-soft); }
+.wn-list li {
+  padding: 14px 0; border-bottom: 1px solid var(--line-soft);
+  font-size: 15px; line-height: 1.6; color: var(--ink-2);
+  display: flex; gap: 12px; align-items: baseline;
+}
+.wn-list li::before { content: "—"; color: var(--grn); flex: none; }
+.wn-list strong { color: var(--ink); font-weight: 600; }
+.wn-foot { margin-top: 18px; font-size: 13.5px; color: var(--ink-3); }
+.wn-close {
+  position: absolute; top: 16px; right: 16px;
+  width: 36px; height: 36px; border-radius: 999px;
+  border: 1px solid var(--line); background: transparent; color: var(--ink-2);
+  display: grid; place-items: center; cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.wn-close:hover { color: var(--ink); background: var(--line-soft); }
+.wn-close svg { width: 14px; height: 14px; }
+
+.hero-new { margin-top: 18px; }
+.wn-link {
+  display: inline-flex; align-items: center; gap: 9px;
+  border: 0; background: none; padding: 4px 2px;
+  font: inherit; font-size: 14.5px; font-weight: 600; color: var(--ink-2);
+  cursor: pointer;
+}
+.wn-link .wn-text {
+  text-decoration: underline;
+  text-decoration-color: var(--line); text-decoration-thickness: 1.5px;
+  text-underline-offset: 5px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+.wn-link:hover .wn-text { color: var(--eyebrow); text-decoration-color: var(--eyebrow); }
+.wn-badge {
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--chip-grn-ink); background: var(--chip-grn-bg);
+  padding: 3px 9px; border-radius: 999px;
+}
+
+/* Dialog motion — only when motion is welcome. */
+@media (prefers-reduced-motion: no-preference) {
+  .lb-img { transition: transform 0.42s cubic-bezier(0.2, 0.7, 0.2, 1); }
+  dialog.lb[open].closing .lb-img { transition-duration: 0.32s; }
+  @keyframes dlg-fade { from { opacity: 0; } to { opacity: 1; } }
+  dialog.lb[open]::backdrop, dialog.wn[open]::backdrop { animation: dlg-fade 0.32s ease both; }
+  dialog.lb[open].closing::backdrop { animation: dlg-fade 0.32s ease both reverse; }
+  dialog.wn[open].closing::backdrop { animation: dlg-fade 0.24s ease both reverse; }
+  dialog.lb[open] .lb-cap, dialog.lb[open] .lb-close { animation: dlg-fade 0.35s ease 0.12s both; }
+  dialog.lb[open].closing .lb-cap, dialog.lb[open].closing .lb-close { animation: dlg-fade 0.15s ease both reverse; }
+  @keyframes wn-in { from { opacity: 0; transform: translateY(10px) scale(0.97); } to { opacity: 1; transform: none; } }
+  @keyframes wn-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(6px) scale(0.98); } }
+  dialog.wn[open] .wn-panel { animation: wn-in 0.36s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+  dialog.wn[open].closing .wn-panel { animation: wn-out 0.22s ease both; }
+}
+
+/* Reduced motion: new hovers become instant state changes, never movement. */
+@media (prefers-reduced-motion: reduce) {
+  .btn, .btn svg, .tlink svg, .plan, .navbar,
+  .lbx .shot, .shot-hint, .lb-close, .wn-close { transition: none; }
+  .btn:hover, .btn:hover svg, .tlink:hover svg, .plan:hover,
+  .lbx .hero-shot .shot:hover, .lbx .row-media .shot:hover, .lbx .grove-shot .shot:hover,
+  .lb-close:hover { transform: none; }
+  .lbx .shot:hover .shot-hint, .lbx .shot:focus-visible .shot-hint { transform: translate(-50%, 0); }
+}
+
 /* ================= Responsive ================= */
 @media (max-width: 980px) {
   .row, .row.flip { grid-template-columns: 1fr; }
@@ -520,7 +697,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 52px; }
     <span class="eyebrow">For Mac + iPhone</span>
     <h1>Get it done.<br><span class="accent">Grow your <span class="hl">grove</span>.</span></h1>
     <p class="lede">Tasks, calendar, habits and deep-focus sessions in one quiet, quick
-    app — where every finished session grows a plant.</p>
+    app — where <strong>every finished session grows a plant</strong>.</p>
     <div class="hero-ctas">
       <a class="btn" href="Tempo.dmg" download>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0 4.5-4.5M12 15l-4.5-4.5M5 20h14"/></svg>
@@ -530,11 +707,21 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 52px; }
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14m0 0 5-5m-5 5-5-5"/></svg>
       </a>
     </div>
+    <p class="hero-new">
+      <button type="button" class="wn-link" id="wn-open" aria-haspopup="dialog">
+        <span class="wn-badge" aria-hidden="true">New</span>
+        <span class="wn-text">See what&rsquo;s new</span>
+      </button>
+    </p>
     <p class="hero-trust">Free download &nbsp;·&nbsp; macOS 15+ &nbsp;·&nbsp; no account needed</p>
   </div>
   <div class="hero-shot">
-    <img src="assets/mac-tasks.png" width="2560" height="1600"
-      alt="Tempo on Mac in light mode: the Today view with a clean list of tasks, each carrying its time, tags and priority, next to the day's schedule.">
+    <button class="shot" type="button" data-caption="The Today view on Mac"
+      aria-label="Enlarge screenshot: the Today view on Mac">
+      <img src="assets/mac-tasks.png" width="2560" height="1600"
+        alt="Tempo on Mac in light mode: the Today view with a clean list of tasks, each carrying its time, tags and priority, next to the day's schedule.">
+      <span class="shot-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M11 8v6M8 11h6"/></svg>Enlarge</span>
+    </button>
   </div>
 </header>
 
@@ -561,14 +748,18 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 52px; }
       <span class="eyebrow">Everything in its place</span>
       <h2>Your whole day, one place.</h2>
       <p class="lede">No juggling between five apps. Tasks, events, habits and focus time
-      live on the same grid — and behave like they belong together.</p>
+      live on <strong>the same grid</strong> — and behave like they belong together.</p>
     </div>
 
     <div class="rows">
       <div class="row rv">
         <div class="row-media">
-          <img src="assets/mac-calendar.png" width="2560" height="1600"
-            alt="Tempo's calendar on Mac showing July in month view, with tasks and events sitting together on one grid.">
+          <button class="shot" type="button" data-caption="Tasks and calendar on one grid"
+            aria-label="Enlarge screenshot: the calendar in month view">
+            <img src="assets/mac-calendar.png" width="2560" height="1600"
+              alt="Tempo's calendar on Mac showing July in month view, with tasks and events sitting together on one grid.">
+            <span class="shot-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M11 8v6M8 11h6"/></svg>Enlarge</span>
+          </button>
         </div>
         <div class="row-copy">
           <h3 class="row-head">Tasks and calendar, one grid.</h3>
@@ -585,8 +776,12 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 52px; }
 
       <div class="row flip rv">
         <div class="row-media">
-          <img src="assets/mac-board.png" width="2560" height="1600"
-            alt="Tempo's kanban board on Mac: tasks as cards in High, Medium, Low and No-priority columns, with a pinned card at the top of the first column.">
+          <button class="shot" type="button" data-caption="Every list can be a board"
+            aria-label="Enlarge screenshot: the kanban board view">
+            <img src="assets/mac-board.png" width="2560" height="1600"
+              alt="Tempo's kanban board on Mac: tasks as cards in High, Medium, Low and No-priority columns, with a pinned card at the top of the first column.">
+            <span class="shot-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M11 8v6M8 11h6"/></svg>Enlarge</span>
+          </button>
         </div>
         <div class="row-copy">
           <span class="eyebrow">Work it your way</span>
@@ -691,6 +886,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 52px; }
       <h2>Focus, planted.</h2>
       <p class="lede">Start a focus session and a seedling starts growing. See the session
       through and the plant joins your grove — quit early and it withers where it stands.
+      <strong>And the longer you stay, the grander the plant grows.</strong>
       Out of nothing but your own attention, a forest takes shape.</p>
     </div>
     <div class="grove-facts rv">
@@ -708,8 +904,12 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 52px; }
       </p>
     </div>
     <div class="grove-shot rv">
-      <img src="assets/mac-grove.png" width="1800" height="1125"
-        alt="The Grove on Mac: a dark focus screen with a session timer counting down and a plant growing in the middle of the scene.">
+      <button class="shot" type="button" data-caption="A focus session in the Grove"
+        aria-label="Enlarge screenshot: a focus session in the Grove">
+        <img src="assets/mac-grove.png" width="1800" height="1125"
+          alt="The Grove on Mac: a dark focus screen with a session timer counting down and a plant growing in the middle of the scene.">
+        <span class="shot-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M11 8v6M8 11h6"/></svg>Enlarge</span>
+      </button>
     </div>
     <div class="tiers rv" role="list" aria-label="Plant tiers, from common to rare">
       <div class="tier" role="listitem"><span class="plant" aria-hidden="true">🌼</span><span class="name">Meadow</span></div>
@@ -730,25 +930,49 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 52px; }
       <span class="eyebrow">In your pocket</span>
       <h2>The same calm, pocket-sized.</h2>
       <p class="lede">Tasks, calendar, habits and the Grove, built for iPhone —
-      pinch the calendar from a full year down to a single day, keep every list
+      <strong>pinch the calendar from a full year down to a single day</strong>, keep every list
       one swipe away in the drawer, and let the optional 60-second tour walk you
       in. Arriving with the App&nbsp;Store release.</p>
     </div>
     <div class="phones">
       <figure class="phone rv">
-        <div class="phone-frame"><img src="assets/iphone-tasks.png" width="560" height="1217" alt="Tempo's task list on iPhone: today's tasks with times, tags and priorities."></div>
+        <div class="phone-frame">
+          <button class="shot" type="button" data-caption="Today, at a glance"
+            aria-label="Enlarge screenshot: today's tasks on iPhone">
+            <img src="assets/iphone-tasks.png" width="560" height="1217" alt="Tempo's task list on iPhone: today's tasks with times, tags and priorities.">
+            <span class="shot-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M11 8v6M8 11h6"/></svg>Enlarge</span>
+          </button>
+        </div>
         <figcaption>Today, at a glance</figcaption>
       </figure>
       <figure class="phone rv" style="--d:.08s">
-        <div class="phone-frame"><img src="assets/iphone-year.png" width="560" height="1217" alt="Tempo's calendar on iPhone zoomed out to a full year — pinch to travel between year, month, week and day."></div>
+        <div class="phone-frame">
+          <button class="shot" type="button" data-caption="Pinch from year to day"
+            aria-label="Enlarge screenshot: the year calendar on iPhone">
+            <img src="assets/iphone-year.png" width="560" height="1217" alt="Tempo's calendar on iPhone zoomed out to a full year — pinch to travel between year, month, week and day.">
+            <span class="shot-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M11 8v6M8 11h6"/></svg>Enlarge</span>
+          </button>
+        </div>
         <figcaption>Pinch from year to day</figcaption>
       </figure>
       <figure class="phone rv" style="--d:.16s">
-        <div class="phone-frame"><img src="assets/iphone-drawer.png" width="560" height="1217" alt="Tempo's lists drawer on iPhone: smart lists, your lists expanding in place, and a personal/shared scope switch."></div>
+        <div class="phone-frame">
+          <button class="shot" type="button" data-caption="Every list, one swipe away"
+            aria-label="Enlarge screenshot: the lists drawer on iPhone">
+            <img src="assets/iphone-drawer.png" width="560" height="1217" alt="Tempo's lists drawer on iPhone: smart lists, your lists expanding in place, and a personal/shared scope switch.">
+            <span class="shot-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M11 8v6M8 11h6"/></svg>Enlarge</span>
+          </button>
+        </div>
         <figcaption>Every list, one swipe away</figcaption>
       </figure>
       <figure class="phone rv" style="--d:.24s">
-        <div class="phone-frame"><img src="assets/iphone-grove.png" width="560" height="1217" alt="The Grove on iPhone: a focus timer running while a plant grows."></div>
+        <div class="phone-frame">
+          <button class="shot" type="button" data-caption="A grove to grow"
+            aria-label="Enlarge screenshot: the focus timer on iPhone">
+            <img src="assets/iphone-grove.png" width="560" height="1217" alt="The Grove's focus timer on iPhone: 25 minutes on the dial, a young plant previewed inside the ring, and the caption '25 min grows a mature Sprout'.">
+            <span class="shot-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M11 8v6M8 11h6"/></svg>Enlarge</span>
+          </button>
+        </div>
         <figcaption>A grove to grow</figcaption>
       </figure>
     </div>
@@ -761,7 +985,7 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 52px; }
     <div class="sec-head center rv">
       <span class="eyebrow">Pricing</span>
       <h2>Free where it counts.</h2>
-      <p class="lede">The free app is the complete core, not a trial.
+      <p class="lede">The free app is <strong>the complete core</strong>, not a trial.
       Plus adds the connected layer.</p>
     </div>
     <div class="plans">
@@ -900,6 +1124,37 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 52px; }
   </div>
 </footer>
 
+<!-- ============ Screenshot lightbox ============ -->
+<dialog class="lb" id="lightbox" aria-label="Screenshot, enlarged view">
+  <button class="lb-close" type="button" aria-label="Close" autofocus>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+  </button>
+  <figure class="lb-fig">
+    <img class="lb-img" id="lb-img" alt="">
+    <figcaption class="lb-cap" id="lb-cap" hidden></figcaption>
+  </figure>
+</dialog>
+
+<!-- ============ What's new ============ -->
+<dialog class="wn" id="whatsnew" aria-labelledby="wn-title">
+  <div class="wn-panel">
+    <button class="wn-close" type="button" aria-label="Close" autofocus>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <span class="eyebrow">What&rsquo;s new</span>
+    <h2 class="wn-title" id="wn-title">New growth in the Grove.</h2>
+    <ul class="wn-list">
+      <li><span><strong>Plants that grow with you.</strong> A short session grows a young
+      plant. Fifty minutes or more grows a grand one, with flourishes all its own.</span></li>
+      <li><span><strong>All 28 species, redrawn.</strong> Every plant in the Grove wears
+      fresh artwork, from first sprout to rarest bloom.</span></li>
+      <li><span><strong>The shop, one tap away.</strong> Wherever you are in the Grove,
+      the plant shop is a single tap away.</span></li>
+    </ul>
+    <p class="wn-foot">Already growing in the free app.</p>
+  </div>
+</dialog>
+
 <script>
 (function () {
   "use strict";
@@ -945,6 +1200,111 @@ footer { border-top: 1px solid var(--line); padding: 40px 0 52px; }
       } catch (e) { /* never block the download */ }
     });
   });
+})();
+
+/* Dialogs: screenshot lightbox + what's-new pop-up. Focus is trapped by the
+   native <dialog>; open/close animations are skipped for reduced-motion users.
+   The lightbox zooms FLIP-style from the clicked thumbnail and lands back on
+   it when closed. */
+(function () {
+  "use strict";
+  var lb = document.getElementById("lightbox");
+  var wn = document.getElementById("whatsnew");
+  var wnBtn = document.getElementById("wn-open");
+  if (!lb || !wn || typeof lb.showModal !== "function") {
+    if (wnBtn) wnBtn.hidden = true;
+    return;
+  }
+  document.documentElement.classList.add("lbx");
+
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var lbImg = document.getElementById("lb-img");
+  var lbCap = document.getElementById("lb-cap");
+  var lastThumb = null;
+
+  /* Scroll lock: freeze the page behind a dialog, compensating for any
+     scrollbar so nothing shifts. */
+  function lock() {
+    var gap = window.innerWidth - document.documentElement.clientWidth;
+    document.documentElement.classList.add("modal-open");
+    if (gap > 0) document.body.style.paddingRight = gap + "px";
+  }
+  function unlock() {
+    document.documentElement.classList.remove("modal-open");
+    document.body.style.paddingRight = "";
+  }
+
+  /* Play a dialog's closing animation, then really close it. */
+  function settle(dlg, ms, prep) {
+    if (dlg.classList.contains("closing")) return;
+    if (reduced.matches) { dlg.close(); return; }
+    dlg.classList.add("closing");
+    if (prep) prep();
+    window.setTimeout(function () {
+      dlg.classList.remove("closing");
+      dlg.close();
+    }, ms);
+  }
+
+  /* Transform that moves the lightbox image onto the given thumbnail. */
+  function transformTo(thumb) {
+    var a = thumb.getBoundingClientRect();
+    var b = lbImg.getBoundingClientRect();
+    if (!a.width || !b.width) return "";
+    return "translate(" +
+      (a.left + a.width / 2 - b.left - b.width / 2) + "px," +
+      (a.top + a.height / 2 - b.top - b.height / 2) + "px) scale(" +
+      (a.width / b.width) + ")";
+  }
+
+  function openLightbox(btn) {
+    var img = btn.querySelector("img");
+    if (!img) return;
+    lbImg.src = img.currentSrc || img.src;
+    lbImg.alt = img.alt || "";
+    var cap = btn.getAttribute("data-caption") || "";
+    lbCap.textContent = cap;
+    lbCap.hidden = !cap;
+    lastThumb = img;
+    lock();
+    lb.showModal();
+    if (reduced.matches) return;
+    var flip = function () {
+      var t = transformTo(lastThumb);
+      if (!t) return;
+      lbImg.style.transition = "none";
+      lbImg.style.transform = t;
+      void lbImg.offsetWidth; /* flush, then release into the transition */
+      lbImg.style.transition = "";
+      lbImg.style.transform = "";
+    };
+    if (lbImg.complete && lbImg.naturalWidth) flip();
+    else lbImg.addEventListener("load", flip, { once: true });
+  }
+
+  function closeLightbox() {
+    settle(lb, 330, function () {
+      if (lastThumb) lbImg.style.transform = transformTo(lastThumb);
+    });
+  }
+
+  lb.addEventListener("close", function () {
+    lbImg.style.transform = "";
+    unlock();
+  });
+  lb.addEventListener("cancel", function (e) { e.preventDefault(); closeLightbox(); });
+  lb.addEventListener("click", function (e) { if (e.target === lb) closeLightbox(); });
+  lb.querySelector(".lb-close").addEventListener("click", closeLightbox);
+  document.querySelectorAll("button.shot").forEach(function (btn) {
+    btn.addEventListener("click", function () { openLightbox(btn); });
+  });
+
+  function closeWhatsNew() { settle(wn, 230); }
+  wnBtn.addEventListener("click", function () { lock(); wn.showModal(); });
+  wn.addEventListener("close", unlock);
+  wn.addEventListener("cancel", function (e) { e.preventDefault(); closeWhatsNew(); });
+  wn.addEventListener("click", function (e) { if (e.target === wn) closeWhatsNew(); });
+  wn.querySelector(".wn-close").addEventListener("click", closeWhatsNew);
 })();
 </script>
 

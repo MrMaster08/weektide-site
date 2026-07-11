@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy — Tempo</title>
+<meta name="theme-color" content="#fbfdfb" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d1410" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +16,10 @@
   :root { --ink:#eef5f0; --ink-2:#b7c4bc; --paper:#0d1410; --line:rgba(238,245,240,0.09); }
 }
 * { margin:0; padding:0; box-sizing:border-box; }
+::selection { background:rgba(47,169,104,0.34); color:var(--ink); }
+::-moz-selection { background:rgba(47,169,104,0.34); color:var(--ink); }
 body { font-family:"Inter",-apple-system,sans-serif; background:var(--paper); color:var(--ink); line-height:1.7; }
+h1, h2 { text-wrap:balance; }
 .wrap { max-width:720px; margin:0 auto; padding:48px 24px 80px; }
 a { color:var(--green); }
 h1 { font-size:34px; font-weight:800; letter-spacing:-0.03em; margin:24px 0 6px; }
